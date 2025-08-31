@@ -1,73 +1,72 @@
 # AfyaPulse
 
-AfyaPulse: AI-powered health symptom checker for Kenya.
+AfyaPulse is an AI-powered health symptom checker for Kenya. It helps users analyze symptoms, get possible conditions, receive first aid suggestions, and pay via M-Pesa to unlock detailed reports.
 
 ## Tech Stack
+
 - **Backend:** Node.js, Express, MongoDB
 - **Frontend:** React, TailwindCSS
-- **AI Tool:** Hugging Face Inference API (free tier)
-- **Messaging:** InstaSend (SMS/WhatsApp)
-- **Payment:** M-Pesa STK push (sandbox/demo)
-
-## Features
-1. User registration/login
-2. Symptom input and AI analysis
-3. Payment via M-Pesa to unlock detailed report
-4. Notification via InstaSend when report is ready
-5. Admin dashboard for usage and payments
+- **AI:** Hugging Face Inference API (zero-shot classification)
+- **Messaging:** InstaSend (for SMS/WhatsApp notifications)
+- **Payments:** M-Pesa Daraja STK Push (sandbox/demo)
 
 ## Setup Instructions
 
-### Prerequisites
-- Node.js (v18+ recommended)
-- npm
-- MongoDB (local or Atlas)
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/jbestcodes/Afyapulse.git
+   cd Afyapulse
+   ```
 
-### Backend Setup
-```
-cd backend
-npm install
-npm start
-```
-- Configure MongoDB URI and API keys in `.env` (see `.env.example`).
+2. **Backend Setup:**
+   ```sh
+   cd backend
+   npm install
+   # Copy .env.example to .env and fill in your MongoDB, Hugging Face, and M-Pesa credentials
+   npm start
+   ```
 
-### Frontend Setup
-```
-cd frontend
-npm install
-npm start
-```
+3. **Frontend Setup:**
+   ```sh
+   cd ../frontend
+   npm install
+   npm start
+   ```
 
-### Connecting MongoDB
-- Update the `MONGODB_URI` in backend `.env` file.
+4. **MongoDB:**  
+   Use MongoDB Atlas or a local MongoDB instance. Set your connection string in `backend/.env`.
 
-## AI Integration (Hugging Face)
-- Uses Hugging Face Inference API to analyze symptoms and suggest possible conditions.
-- Free tier is used; you can set your Hugging Face API key in backend `.env`.
+## AI Integration
 
-## Notifications (InstaSend)
-- InstaSend API is used to send SMS/WhatsApp notifications when a report is ready.
-- Set your InstaSend API credentials in backend `.env`.
+- Uses Hugging Face's `facebook/bart-large-mnli` model for zero-shot classification of symptoms.
+- Returns possible conditions and first aid suggestions.
 
-## Payments (M-Pesa STK Push)
-- M-Pesa STK push is integrated for payments (sandbox/demo mode if no credentials).
-- Set your M-Pesa sandbox credentials in backend `.env` or use simulation mode.
+## Notifications
+
+- Uses InstaSend API for sending SMS/WhatsApp notifications when a report is ready.
+
+## Payments
+
+- Integrates M-Pesa Daraja STK Push (sandbox) for payments.
+- Requires Safaricom Daraja sandbox credentials (Consumer Key, Secret, Shortcode, Passkey).
 
 ## Example Usage Workflow
-1. User registers/logs in.
-2. User enters symptoms.
-3. AI analyzes and returns basic possible conditions.
-4. User pays via M-Pesa to unlock detailed report.
-5. User receives notification via InstaSend when report is ready.
-6. Admin can view usage and payments in dashboard.
+
+1. User registers or logs in.
+2. User enters symptoms and receives possible conditions + first aid advice.
+3. User pays via M-Pesa to unlock a detailed report.
+4. User receives notification when the report is ready.
 
 ## Running Locally
-- For both backend and frontend, use:
-```
+
+```sh
+# In /backend
+npm install
+npm start
+
+# In /frontend
 npm install
 npm start
 ```
-- Ensure MongoDB is running and all API keys are set in `.env` files.
 
----
-For more details, see the respective `/backend` and `/frontend` folders.
+
