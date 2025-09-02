@@ -3,17 +3,24 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-  const userName = localStorage.getItem('userName');
+  const [userName, setUserName] = useState(localStorage.getItem('userName'));
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('token'));
+    const handleStorage = () => {
+      setIsLoggedIn(!!localStorage.getItem('token'));
+      setUserName(localStorage.getItem('userName'));
+    };
+    window.addEventListener('storage', handleStorage);
+    handleStorage();
+    return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
     setIsLoggedIn(false);
+    setUserName('');
     navigate('/login');
   };
 
@@ -39,7 +46,7 @@ export default function Navbar() {
       <div className="flex items-center space-x-4">
         {isLoggedIn ? (
           <>
-            <span className="text-blue-700 font-semibold">Hello, {userName} 😊</span>
+            <span className="text-blue-700 font-semibold">Hello, {userName || 'User'} 😊</span>
             <button
               onClick={handleLogout}
               className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all"
