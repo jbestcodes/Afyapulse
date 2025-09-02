@@ -9,7 +9,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
       const res = await api.post('/api/auth/login', { email, password });
@@ -26,7 +27,10 @@ export default function Login() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-pink-100 to-blue-100">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+      <form
+        onSubmit={handleLogin}
+        className="max-w-md w-full bg-white rounded-lg shadow-lg p-8"
+      >
         <h2 className="text-2xl font-bold mb-4 text-blue-700">Login</h2>
         <input
           type="email"
@@ -44,9 +48,9 @@ export default function Login() {
         />
         {error && <div className="text-red-500 mb-2">{error}</div>}
         <button
+          type="submit"
           className={`w-full bg-blue-600 text-white p-2 rounded mb-2 transition-all duration-200
             ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:bg-blue-700 hover:scale-105'}`}
-          onClick={handleLogin}
           disabled={loading}
         >
           {loading ? (
@@ -62,12 +66,13 @@ export default function Login() {
           )}
         </button>
         <button
+          type="button"
           className="w-full bg-gray-200 text-blue-700 p-2 rounded hover:bg-gray-300"
           onClick={() => navigate('/reset-password')}
         >
           Forgot Password?
         </button>
-      </div>
+      </form>
     </div>
   );
 }
