@@ -60,8 +60,8 @@ export default function SymptomChecker() {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-pink-100 to-blue-100 pt-8">
-      <div className="w-full max-w-xl bg-white rounded-lg shadow-lg p-8 mb-6">
-        <h2 className="text-2xl font-bold mb-4 text-blue-700">Symptom Analyzer</h2>
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-8 mb-6 border border-pink-200">
+        <h2 className="text-2xl font-bold mb-4 text-blue-700 text-center">Symptom Analyzer</h2>
         {error && <div className="text-red-500 mb-2">{error}</div>}
         <form onSubmit={handleAnalyze}>
           <input
@@ -73,7 +73,7 @@ export default function SymptomChecker() {
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+            className="w-full bg-gradient-to-r from-blue-500 to-pink-500 text-white p-2 rounded-xl shadow hover:scale-105 hover:from-blue-600 hover:to-pink-600 transition-all duration-200 font-semibold"
           >
             Analyze
           </button>
@@ -84,8 +84,12 @@ export default function SymptomChecker() {
               <span className="text-red-500">{result.error}</span>
             ) : (
               <>
-                <div className="font-semibold text-blue-800">Possible Condition: {result.aiResult}</div>
-                <div className="text-green-700">First Aid: {result.firstAid}</div>
+                <div className="font-semibold text-blue-800">
+                  Possible Condition: {result.aiResult || 'N/A'}
+                </div>
+                <div className="text-green-700">
+                  First Aid: {result.firstAid || 'N/A'}
+                </div>
                 <button onClick={handlePay} className="mt-4 w-full bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded transition">Pay via M-Pesa for Detailed Report</button>
               </>
             )}
