@@ -3,17 +3,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+const app = express();
+
+// Place CORS setup here
+app.use(cors({
+  origin: '*',
+  credentials: true,
+}));
+
+app.use(express.json());
+
+// Route definitions
 const authRoutes = require('./routes/auth');
 const symptomRoutes = require('./routes/symptom');
 const paymentRoutes = require('./routes/payment');
 const adminRoutes = require('./routes/admin');
-
-const app = express();
-app.use(cors({
-  origin: ['https://afyapulse.vercel.app', 'http://localhost:3000'],
-  credentials: true,
-}));
-app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/symptom', symptomRoutes);
