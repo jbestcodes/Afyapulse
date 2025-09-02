@@ -8,13 +8,15 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await api.post('/api/auth/register', { name, email, password, phone });
-      navigate('/login');
+      setSuccess('Registration successful! Please log in.');
+      setTimeout(() => navigate('/login'), 2000); // Wait 2 seconds before redirect
     } catch (err) {
       setError('Registration failed');
     }
@@ -25,6 +27,7 @@ export default function Register() {
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-80">
         <h2 className="text-2xl font-bold mb-4">Register</h2>
         {error && <div className="text-red-500 mb-2">{error}</div>}
+        {success && <div className="text-green-600 mb-2">{success}</div>}
         <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} className="mb-2 w-full p-2 border rounded" required />
         <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} className="mb-2 w-full p-2 border rounded" required />
         <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="mb-2 w-full p-2 border rounded" required />

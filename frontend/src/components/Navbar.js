@@ -1,8 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
-  const isLoggedIn = !!localStorage.getItem('token');
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const userName = localStorage.getItem('userName');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('token'));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    setIsLoggedIn(false);
+    navigate('/login');
+  };
 
   return (
     <nav className="bg-white shadow-md py-4 px-8 flex items-center justify-between">
@@ -24,8 +37,22 @@ export default function Navbar() {
         )}
       </div>
       <div className="flex items-center space-x-4">
-        <Link to="/login" className="text-blue-600 hover:text-pink-600 transition-all">Login</Link>
-        <Link to="/register" className="text-blue-600 hover:text-pink-600 transition-all">Register</Link>
+        {isLoggedIn ? (
+          <>
+            <span className="text-blue-700 font-semibold">Hello, {userName} 😊</span>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="text-blue-600 hover:text-pink-600 transition-all">Login</Link>
+            <Link to="/register" className="text-blue-600 hover:text-pink-600 transition-all">Register</Link>
+          </>
+        )}
       </div>
     </nav>
   );
