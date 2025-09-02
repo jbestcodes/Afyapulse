@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -39,6 +38,19 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
+});
+
+// Reset Password
+router.post('/reset-password', async (req, res) => {
+  const { email } = req.body;
+  // Find user by email
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(200).json({ message: 'If your email is registered, you will receive reset instructions.' });
+  }
+  // TODO: Generate reset token and send email/SMS here
+  // For now, just respond
+  res.json({ message: 'Reset instructions sent to your email.' });
 });
 
 
