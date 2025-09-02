@@ -5,6 +5,7 @@ import api from '../utils/api';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -39,13 +40,22 @@ export default function Login() {
           placeholder="Email"
           className="w-full p-2 border rounded mb-4"
         />
-        <input
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Password"
-          className="w-full p-2 border rounded mb-4"
-        />
+        <div className="relative mb-4">
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Password"
+            className="w-full p-2 border rounded pr-10"
+          />
+          <span
+            className="absolute right-3 top-2 cursor-pointer text-gray-500"
+            onClick={() => setShowPassword(!showPassword)}
+            title={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? '🙈' : '👁️'}
+          </span>
+        </div>
         {error && <div className="text-red-500 mb-2">{error}</div>}
         <button
           type="submit"
