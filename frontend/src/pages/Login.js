@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../utils/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -10,11 +11,17 @@ export default function Login() {
 
   const handleLogin = async () => {
     setLoading(true);
-    // Simulate login delay
-    setTimeout(() => {
+    try {
+      const res = await api.post('/api/auth/login', { email, password });
+      // Save token and user info
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('userName', res.data.name);
       setLoading(false);
-      // Add your login logic here
-    }, 1500);
+      navigate('/');
+    } catch (err) {
+      setLoading(false);
+      setError('Login failed. Please check your credentials.');
+    }
   };
 
   return (
